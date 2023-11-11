@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Csharp_Basic/.vs/Csharp_Basic
+/Csharp_Basic/homeWork_basic/obj

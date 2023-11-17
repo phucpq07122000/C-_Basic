@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace homeWork_basic.SQLAdapter
+namespace homeWork_basic.ISQLAdapter
 {
     /// <summary>
     /// interface SQL Adapter

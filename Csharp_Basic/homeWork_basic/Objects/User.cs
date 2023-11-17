@@ -22,5 +22,7 @@ namespace homeWork_basic.Objects
         /// password
         /// </summary>
         public string Password { get; set; } = string.Empty;
+
+
     }
 }

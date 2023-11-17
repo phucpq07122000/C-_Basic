@@ -1,4 +1,5 @@
 ﻿using homeWork_basic.Objects;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +9,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace homeWork_basic.SQLAdapter
+namespace homeWork_basic.ISQLAdapter
 {
     public class UserSqlAdapter : ISqlAdapter<User>
     {
@@ -66,24 +67,103 @@ namespace homeWork_basic.SQLAdapter
             }
         }
 
+        /// <summary>
+        /// Get User by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public User Get(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                User UserProfile = new User();
+
+                SqlConnection connection = new SqlConnection(ConnectionString);
+
+                connection.Open();
+                String query = "SELECT * " +
+                              "FROM Users " +
+                             "WHERE id_user= @ID ";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", id);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    UserProfile = new User
+                    {
+                        Id = Guid.Parse(reader["Id"].ToString()),
+                        Name = reader["Name"].ToString(),
+                        Password = reader["Password"].ToString()
+                    };
+                }
+                return UserProfile;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+          
         }
 
         public int Insert(User AddData)
         {
-            throw new NotImplementedException();
+            int i = 0;
+            try
+            {
+                SqlConnection connection = new SqlConnection(ConnectionString);
+                connection.Open();
+                String query = "INSERT into Users ( name, password)" +
+                               "VALUES ( @name, @password);";
+                SqlCommand command = new SqlCommand(query, connection);
+              
+             
+
+                    command.Parameters.AddWithValue("@name", AddData.Name);
+                    command.Parameters.AddWithValue("@password", AddData.Password);
+                
+                    command.ExecuteNonQuery();
+          
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return i;
+            }
         }
 
         public int Update(User UpdateData)
         {
-            throw new NotImplementedException();
+            try
+            {
+                User UserProfile = new User();
+
+                SqlConnection connection = new SqlConnection(ConnectionString);
+
+                connection.Open();
+                String query = "UPDATE Users " +
+                                "SET name = @name, password = @password " +
+                                 "WHERE id_user = @id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", UpdateData.Id);
+                command.Parameters.AddWithValue("@name", UpdateData.Name);
+                command.Parameters.AddWithValue("@password", UpdateData.Password);
+              
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return 0;
+            }
         }
 
         public int Delete(Guid id)
         {
             throw new NotImplementedException();
         }
+
+      
     }
 }

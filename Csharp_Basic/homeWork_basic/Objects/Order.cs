@@ -8,10 +8,10 @@ namespace homeWork_basic.Objects
 {
     public class Order
     {
-        public Guid Id_User { get; set; } 
+        public Guid Id_Oder { get; set; }
 
-        List<Cart> ListCarts { get; set; } = new List<Cart>();    
-
-        public int Total { get; set; }  
+        public String? listProduct {  get; set; }
+        public int number { get; set; }
+        public double payment { get; set; }
     }
 }
